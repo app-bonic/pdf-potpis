@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Potpis i pečat na PDF</title>
+<meta name="description" content="Nacrtaj potpis, učitaj pečat ili upiši tekst i postavi ga bilo gdje na PDF. Besplatno, u pregledniku — dokument se ne šalje na poslužitelj.">
+<link rel="icon" href="zajednicko/logo.svg">
+<link rel="stylesheet" href="zajednicko/app-bonic.css">
+<link rel="stylesheet" href="stil.css">
+</head>
+<body data-alat="pdf-potpis">
+<header class="ab-vrh"></header>
+
+<main class="ab-omot">
+  <section class="ab-uvod">
+    <span class="ab-ikona"><span data-ik="potpis"></span></span>
+    <div>
+      <h1>Potpis i pečat na PDF</h1>
+      <p>Nacrtaj potpis, učitaj sliku pečata ili upiši tekst (npr. datum) i postavi ga povlačenjem bilo gdje na stranicu. Ovo je vizualni potpis, a ne kvalificirani elektronički potpis.</p>
+    </div>
+  </section>
+
+  <div class="dropzona" id="drop"><span data-ik="pdf"></span><b>Ubaci PDF za potpisivanje</b><span>Klikni ili povuci datoteku ovamo</span></div>
+
+  <div class="raspored" id="radno" hidden>
+    <aside class="kartica ploca">
+      <div class="seg" role="radiogroup" aria-label="Vrsta potpisa">
+        <label><input type="radio" name="vrsta" value="crtaj" checked><span>Nacrtaj</span></label>
+        <label><input type="radio" name="vrsta" value="slika"><span>Slika / pečat</span></label>
+        <label><input type="radio" name="vrsta" value="tekst"><span>Tekst</span></label>
+      </div>
+
+      <div class="v-crtaj">
+        <canvas id="blok" class="blok" aria-label="Polje za crtanje potpisa"></canvas>
+        <div class="red-alata">
+          <label class="boje"><input type="radio" name="boja" value="#111827" checked><span style="--b:#111827"></span></label>
+          <label class="boje"><input type="radio" name="boja" value="#1d3fbf"><span style="--b:#1d3fbf"></span></label>
+          <label class="boje"><input type="radio" name="boja" value="#0f766e"><span style="--b:#0f766e"></span></label>
+          <input type="range" id="debljina" min="1" max="8" step=".5" value="2.5" aria-label="Debljina">
+          <button type="button" class="gumb tekstualni" id="brisiBlok">Očisti</button>
+        </div>
+      </div>
+
+      <div class="v-slika" hidden>
+        <div class="dropzona mala" id="dropSlika"><span data-ik="slika"></span><b>Učitaj sliku potpisa ili pečata</b><span>PNG s prozirnom pozadinom je najbolji</span></div>
+        <label class="kvacica"><input type="checkbox" id="makniBijelo" checked><span>Ukloni bijelu pozadinu (za skenirane pečate)</span></label>
+        <div class="pregled-slike" id="pregledSlike"></div>
+      </div>
+
+      <div class="v-tekst" hidden>
+        <div class="polje"><label for="tekst">Tekst</label><input id="tekst" placeholder="Ivan Horvat"></div>
+        <div class="gumbi">
+          <button type="button" class="gumb tekstualni" id="danas">+ današnji datum</button>
+        </div>
+        <div class="polje"><label for="font">Pismo</label>
+          <select id="font">
+            <option value="'Segoe Script', 'Brush Script MT', 'Lucida Handwriting', cursive">Rukopis</option>
+            <option value="Arial, Helvetica, sans-serif">Obično</option>
+            <option value="Georgia, 'Times New Roman', serif">Serif</option>
+          </select></div>
+      </div>
+
+      <button type="button" class="gumb glavni" id="dodaj"><span data-ik="plus"></span>Postavi na stranicu</button>
+      <label class="kvacica"><input type="checkbox" id="zapamti"><span>Zapamti moje potpise na ovom računalu</span></label>
+
+      <div id="spremljeni" class="spremljeni"></div>
+
+      <hr>
+      <div class="polje"><label for="ime">Naziv datoteke</label><input id="ime" value="potpisano.pdf"></div>
+      <button type="button" class="gumb glavni veliki" id="spremi"><span data-ik="preuzmi"></span>Preuzmi potpisani PDF</button>
+      <button type="button" class="gumb tekstualni opasno" id="novi">Drugi dokument</button>
+    </aside>
+
+    <section class="stranice-omot">
+      <p class="napomena uputa">Klikni „Postavi na stranicu”, pa potpis povuci na željeno mjesto. Veličinu mijenjaš kutom dolje desno.</p>
+      <div id="stranice" class="stranice"></div>
+    </section>
+  </div>
+</main>
+
+<footer class="ab-dno"></footer>
+<script src="zajednicko/app-bonic.js"></script>
+<script src="lib/pdf.min.js"></script>
+<script src="lib/pdf-lib.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
